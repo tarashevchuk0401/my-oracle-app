@@ -9,7 +9,7 @@ export class TaxpayerController {
 
     @Get()
     async getTaxpayer(){
-        return 'TP'
+        return 'taxpayer'
     }
 
     @Post()
