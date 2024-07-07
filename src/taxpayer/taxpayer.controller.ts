@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { TaxpayerService } from "./taxpayer.service";
 
-@Controller('taxpayer')
+@Controller('taxpayer-test')
 export class TaxpayerController {
     constructor(
         private taxpayerService: TaxpayerService
