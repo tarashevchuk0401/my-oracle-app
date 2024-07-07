@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { TaxpayerEntity } from 'src/taxpayer/dto/taxpayer.entity.dto'
+import { Column, Entity,OneToOne, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class AuditPassportEntity{
@@ -7,4 +8,9 @@ export class AuditPassportEntity{
 
     @Column()
     type: string
+
+    @ManyToOne(() => TaxpayerEntity, (taxpayer) => taxpayer.auditPassport,{
+        eager:true
+    })
+    taxpayer: TaxpayerEntity;
 }
