@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { TaxpayerService } from "./taxpayer.service";
 
-@Controller('taxpayer-test')
+@Controller('taxpayer-conflict')
 export class TaxpayerController {
     constructor(
         private taxpayerService: TaxpayerService
@@ -14,7 +14,7 @@ export class TaxpayerController {
 
     @Post()
     async createTaxpayer(@Body() body: {name: string}){
-        console.log(body)
+        // console.log(body)
         return this.taxpayerService.createTaxpayer(body.name)
     }
 
