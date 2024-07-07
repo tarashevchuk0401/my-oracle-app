@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put } from "@nestjs/common";
 import { TaxpayerService } from "./taxpayer.service";
 
 @Controller('taxpayer')
@@ -16,6 +16,9 @@ export class TaxpayerController {
     async createTaxpayer(@Body() body: {name: string}){
         return this.taxpayerService.createTaxpayer(body.name)
     }
-//coment 1
-//com2
+
+    @Put()
+    async updated(@Body() body: {name: string}){
+        return this.taxpayerService.createTaxpayer(body.name)
+    }
 }
