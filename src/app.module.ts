@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaxpayerModule } from './taxpayer/taxpayer.module';
 import { TaxpayerEntity } from './taxpayer/dto/taxpayer.entity.dto';
 import { AuditPassportEntity } from './audit-passport/dto/audit-passport.dto';
+import { TaxpayerService } from './taxpayer/taxpayer.service';
 
 @Module({
   imports: [
@@ -19,7 +20,9 @@ import { AuditPassportEntity } from './audit-passport/dto/audit-passport.dto';
       synchronize: true,
       entities: [TaxpayerEntity, AuditPassportEntity],
     }),
-    TaxpayerModule, AuditPassportModule],
+    TaxpayerModule,
+    AuditPassportModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
