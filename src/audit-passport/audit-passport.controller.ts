@@ -16,7 +16,7 @@ export class AuditPassportController {
 
     @Post()
     async createAP(
-        @Body() body : {type: string, taxpayer: string}
+        @Body() body : {type: string, taxpayers: string[]}
     ){
         return await this.auditPassportService.createAP(body)
     }
