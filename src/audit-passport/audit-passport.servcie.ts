@@ -20,32 +20,26 @@ export class AuditPassportServcie {
   async getList(params: { taxpayer: string }) {
     const { taxpayer } = params;
 
-    const taxpayerEntity = await this.taxpayerService.findTaxpayerById(
-      taxpayer,
-    );
+    const taxpayerEntity =
+      await this.taxpayerService.findTaxpayerById(taxpayer);
 
     const list = await this.auditPassportRepository.findAndCount({
       where: {
-        taxpayer: { taxpayerId: taxpayer }
+        taxpayer: { taxpayerId: taxpayer },
       },
     });
-
-    // const list = await this.auditPassportRepository
-    //   .createQueryBuilder('audit_passport')
-    //   .where('audit_passport.taxpayerId = : taxpayer', { taxpayer: taxpayer })
-    //   .getMany();
 
     return list;
   }
 
-  async createAP(body: { type: string; taxpayer: string }) {
-    const taxpayerEntity = await this.taxpayerService.findTaxpayerById(
-      body.taxpayer,
+  async createAP(body: { type: string; taxpayers: string[] }) {
+    const allTaxpayers = await this.taxpayerService.findTaxpayers(
+      body.taxpayers,
     );
 
     const newAP = this.auditPassportRepository.create({
       ...body,
-      taxpayer: taxpayerEntity,
+      taxpayer: allTaxpayers,
     });
 
     await this.auditPassportRepository.save(newAP);

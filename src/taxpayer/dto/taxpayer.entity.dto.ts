@@ -9,6 +9,6 @@ export class TaxpayerEntity{
     @Column()
     name: string
 
-    @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
-    auditPassport: AuditPassportEntity;
+    // @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
+    // auditPassport: AuditPassportEntity;
 }
