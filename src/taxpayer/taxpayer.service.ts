@@ -27,5 +27,5 @@ export class TaxpayerService {
     return await this.taxpayerRepository.findOneBy({ taxpayerId: id });
   }
 
-  //main
+  // changed from relations
 }
