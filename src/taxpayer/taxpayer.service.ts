@@ -45,21 +45,20 @@ export class TaxpayerService {
     };
 
     if (searchTerm) {
-      const result = await this.taxpayerRepository.find({
+      return await this.taxpayerRepository.find({
         where: [
           { surname: Like(`%${searchTerm}%`), ...basciFilter },
           { name: Like(`%${searchTerm}%`), ...basciFilter },
         ],
       });
-      return result;
     } else {
-      const result = await this.taxpayerRepository.find({
+      return await this.taxpayerRepository.find({
         where: basciFilter,
       });
 
-      return result;
       // text from relations branch
       //new text ...
+      //third
     }
   }
 }
