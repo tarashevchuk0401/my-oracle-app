@@ -9,9 +9,6 @@ export class TaxpayerEntity{
     @Column()
     name: string
 
-    @Column()
-    country: string
-
-    @Column()
-    surname: string
+    @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
+    auditPassport: AuditPassportEntity;
 }

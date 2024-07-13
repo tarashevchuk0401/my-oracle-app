@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaxpayerEntity } from './dto/taxpayer.entity.dto';
-import { Repository, Like } from 'typeorm';
-import { In } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TaxpayerService {
@@ -11,54 +10,20 @@ export class TaxpayerService {
     private readonly taxpayerRepository: Repository<TaxpayerEntity>,
   ) {}
 
-  async getAll() {
-    return await this.taxpayerRepository.findAndCount();
-  }
+  async getAll(){
+    return await this.taxpayerRepository.findAndCount()
+  } 
 
-  async createTaxpayer(name: string, surname: string, country: string) {
+  async createTaxpayer(name: string) {
     const newTaxpayer = await this.taxpayerRepository.create({
-      name,
-      surname,
-      country,
+      name
     });
 
     this.taxpayerRepository.save(newTaxpayer);
     return newTaxpayer;
   }
 
-  async findTaxpayerById(id: string) {
-    return await this.taxpayerRepository.findOneBy({ taxpayerId: id });
-  }
-
-  async findTaxpayers(array: string[]) {
-    const taxpayers = await this.taxpayerRepository.find({
-      where: { taxpayerId: In(array) },
-    });
-    console.log(taxpayers);
-
-    return taxpayers;
-  }
-
-  async getWithFilter(searchTerm: string, country: string) {
-    const basciFilter = {
-      ...(country ? { country: Like(`%${country}%`) } : {}),
-    };
-
-    if (searchTerm) {
-      return await this.taxpayerRepository.find({
-        where: [
-          { surname: Like(`%${searchTerm}%`), ...basciFilter },
-          { name: Like(`%${searchTerm}%`), ...basciFilter },
-        ],
-      });
-    } else {
-      return await this.taxpayerRepository.find({
-        where: basciFilter,
-      });
-
-      // text from relations branch
-      //new text ...
-      //third
-    }
+  async findTaxpayerById(id:  string){
+    return await this.taxpayerRepository.findOneBy({taxpayerId: id})
   }
 }
