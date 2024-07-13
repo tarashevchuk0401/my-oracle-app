@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuditPassportEntity } from './dto/audit-passport.dto';
 import { Repository } from 'typeorm';
-import { TaxpayerEntity } from 'src/taxpayer/dto/taxpayer.entity.dto';
 import { TaxpayerService } from 'src/taxpayer/taxpayer.service';
+import { AuditPassportAuditorsParams } from '../interfaces/audit';
 
 @Injectable()
 export class AuditPassportServcie {
@@ -19,9 +19,6 @@ export class AuditPassportServcie {
 
   async getList(params: { taxpayer: string }) {
     const { taxpayer } = params;
-
-    const taxpayerEntity =
-      await this.taxpayerService.findTaxpayerById(taxpayer);
 
     const list = await this.auditPassportRepository.findAndCount({
       where: {
@@ -44,5 +41,16 @@ export class AuditPassportServcie {
 
     await this.auditPassportRepository.save(newAP);
     return newAP;
+  }
+
+  async getAuditTaxpayers(params: AuditPassportAuditorsParams) {
+    // const audit = await this.auditPassportRepository.findOneBy({
+    //   auditPassportId: params.auditId,
+    // });
+
+    const ids = ['1', '2', '3', '4', '5'];
+
+    const taxpayers = await this.taxpayerService.getTaxpayersList(params, ids);
+    return taxpayers;
   }
 }

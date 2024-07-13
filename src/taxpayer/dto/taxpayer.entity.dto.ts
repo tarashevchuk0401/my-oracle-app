@@ -1,14 +1,13 @@
-import { AuditPassportEntity } from 'src/audit-passport/dto/audit-passport.dto';
-import { Column, Entity,OneToOne, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class TaxpayerEntity{
-    @PrimaryGeneratedColumn()
-    taxpayerId: string
+export class TaxpayerEntity {
+  @PrimaryGeneratedColumn()
+  taxpayerId: string;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    // @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
-    // auditPassport: AuditPassportEntity;
+  // @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
+  // auditPassport: AuditPassportEntity;
 }
