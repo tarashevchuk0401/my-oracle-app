@@ -8,7 +8,7 @@ import { TaxpayerService } from './taxpayer.service';
 @Module({
   imports: [TypeOrmModule.forFeature([TaxpayerEntity])],
   providers: [TaxpayerService],
-  exports:[TaxpayerService],
+  exports: [TaxpayerService],
   controllers: [TaxpayerController],
 })
 export class TaxpayerModule {}

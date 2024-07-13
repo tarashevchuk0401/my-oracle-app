@@ -1,5 +1,15 @@
 import { TaxpayerEntity } from 'src/taxpayer/dto/taxpayer.entity.dto';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  JoinTable,
+  Column,
+  Entity,
+  OneToOne,
+  ManyToMany,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class AuditPassportEntity {
@@ -9,8 +19,9 @@ export class AuditPassportEntity {
   @Column()
   type: string;
 
-  @ManyToOne(() => TaxpayerEntity, (taxpayer) => taxpayer.auditPassport, {
+  @ManyToMany(() => TaxpayerEntity, {
     eager: true,
   })
-  taxpayer: TaxpayerEntity;
+  @JoinTable()
+  taxpayer: TaxpayerEntity[];
 }
