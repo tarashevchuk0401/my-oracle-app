@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { TaxpayerService } from "./taxpayer.service";
 
 @Controller('taxpayer')
@@ -13,9 +13,13 @@ export class TaxpayerController {
     }
 
     @Post()
-    async createTaxpayer(@Body() body: {name: string}){
-        return this.taxpayerService.createTaxpayer(body.name)
+    async createTaxpayer(@Body() body: {name: string, surname: string, country: string}){
+        return this.taxpayerService.createTaxpayer(body.name, body.surname, body.country)
     }
-//coment 1
-//com2
+
+    @Get('filter')
+    async getWithFilter(@Query() params: {searchTerm: string, country: string}){
+        return this.taxpayerService.getWithFilter(params.searchTerm, params.country)
+    }
+
 }
