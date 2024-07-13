@@ -10,20 +10,20 @@ export class TaxpayerService {
     private readonly taxpayerRepository: Repository<TaxpayerEntity>,
   ) {}
 
-  async getAll(){
-    return await this.taxpayerRepository.findAndCount()
-  } 
+  async getAll() {
+    return await this.taxpayerRepository.findAndCount();
+  }
 
   async createTaxpayer(name: string) {
     const newTaxpayer = await this.taxpayerRepository.create({
-      name
+      name,
     });
 
     this.taxpayerRepository.save(newTaxpayer);
     return newTaxpayer;
   }
 
-  async findTaxpayerById(id:  string){
-    return await this.taxpayerRepository.findOneBy({taxpayerId: id})
+  async findTaxpayerById(id: string) {
+    return await this.taxpayerRepository.findOneBy({ taxpayerId: id });
   }
 }
