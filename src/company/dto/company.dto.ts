@@ -20,4 +20,10 @@ export class CompanyEntity {
   })
   @JoinColumn({ name: 'taxpayer_id' })
   taxpayer: TaxpayerEntity;
+
+  @Column()
+  schema: string;
+
+  @Column()
+  data: string;
 }
