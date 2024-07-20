@@ -47,4 +47,11 @@ export class TaxpayerService {
 
     return taxpayers;
   }
+
+  async getTaxpayersByAudit(id: string) {}
+
+  async deleteTaxpayer(id: string) {
+    const res = await this.taxpayerRepository.delete(id);
+    return res;
+  }
 }

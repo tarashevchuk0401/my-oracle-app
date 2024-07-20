@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Query,
+  Param,
+} from '@nestjs/common';
 import { AuditPassportServcie } from './audit-passport.servcie';
 import { AuditPassportAuditorsParams } from '../interfaces/audit';
 
@@ -16,12 +24,29 @@ export class AuditPassportController {
   }
 
   @Post()
-  async createAP(@Body() body: { type: string; taxpayers: string[] }) {
+  async createAP(
+    @Body()
+    body: {
+      type: string;
+      taxpayers: string[];
+      responsibleTaxpayerId: string;
+    },
+  ) {
     return await this.auditPassportService.createAP(body);
   }
 
   @Get('taxpayers/:id')
   async getAuditTaxpayers(@Query() params: AuditPassportAuditorsParams) {
     return await this.auditPassportService.getAuditTaxpayers(params);
+  }
+
+  @Delete()
+  async deleteTaxpayerFromPassport() {
+    return await this.auditPassportService.deleteTaxpayerFromPassport();
+  }
+
+  @Get('dy-audit/:id')
+  async getTaxpayersByAudit(@Param('id') id: string) {
+    return await this.auditPassportService.getTaxpayersByAuditPassportId(id);
   }
 }

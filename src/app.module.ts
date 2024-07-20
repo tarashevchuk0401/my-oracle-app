@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaxpayerModule } from './taxpayer/taxpayer.module';
 import { TaxpayerEntity } from './taxpayer/dto/taxpayer.entity.dto';
 import { AuditPassportEntity } from './audit-passport/dto/audit-passport.dto';
-import { TaxpayerService } from './taxpayer/taxpayer.service';
+import { CompanyEntity } from './company/dto/company.dto';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -18,10 +19,11 @@ import { TaxpayerService } from './taxpayer/taxpayer.service';
       password: 'taras',
       autoLoadEntities: true,
       synchronize: true,
-      entities: [TaxpayerEntity, AuditPassportEntity],
+      entities: [TaxpayerEntity, AuditPassportEntity, CompanyEntity],
     }),
     TaxpayerModule,
     AuditPassportModule,
+    CompanyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

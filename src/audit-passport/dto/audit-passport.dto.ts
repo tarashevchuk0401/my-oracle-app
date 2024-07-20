@@ -21,7 +21,21 @@ export class AuditPassportEntity {
 
   @ManyToMany(() => TaxpayerEntity, {
     eager: true,
+    cascade: true,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'audit_passport_taxpayer',
+    joinColumn: {
+      name: 'audit_passport',
+      referencedColumnName: 'auditPassportId',
+    },
+    inverseJoinColumn: { name: 'taxpayer', referencedColumnName: 'taxpayerId' },
+  })
   taxpayer: TaxpayerEntity[];
+
+  @ManyToOne(() => TaxpayerEntity, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  responsibleTaxpayer: TaxpayerEntity;
 }

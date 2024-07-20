@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
+import { CompanyEntity } from '../../company/dto/company.dto';
 
 @Entity()
 export class TaxpayerEntity {
@@ -8,6 +16,6 @@ export class TaxpayerEntity {
   @Column()
   name: string;
 
-  // @OneToMany(() => AuditPassportEntity, (auditPassport) => auditPassport.taxpayer)
-  // auditPassport: AuditPassportEntity;
+  @OneToOne(() => CompanyEntity)
+  company: CompanyEntity;
 }
