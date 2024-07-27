@@ -1,13 +1,10 @@
 import { TaxpayerEntity } from 'src/taxpayer/dto/taxpayer.entity.dto';
 import {
-  JoinTable,
   Column,
   Entity,
-  OneToOne,
+  JoinTable,
   ManyToMany,
-  JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
