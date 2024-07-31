@@ -8,6 +8,8 @@ import { TaxpayerEntity } from './taxpayer/dto/taxpayer.entity.dto';
 import { AuditPassportEntity } from './audit-passport/dto/audit-passport.dto';
 import { CompanyEntity } from './company/dto/company.dto';
 import { CompanyModule } from './company/company.module';
+import { User } from './user/dto/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,11 +21,13 @@ import { CompanyModule } from './company/company.module';
       password: 'taras',
       autoLoadEntities: true,
       synchronize: true,
-      entities: [TaxpayerEntity, AuditPassportEntity, CompanyEntity],
+      logging: true,
+      entities: [TaxpayerEntity, AuditPassportEntity, User, CompanyEntity],
     }),
     TaxpayerModule,
     AuditPassportModule,
     CompanyModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
