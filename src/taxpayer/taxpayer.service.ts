@@ -4,6 +4,8 @@ import { TaxpayerEntity } from './dto/taxpayer.entity.dto';
 import { Repository } from 'typeorm';
 import { In } from 'typeorm';
 import { AuditPassportAuditorsParams } from '../interfaces/audit';
+import { OnEvent } from '@nestjs/event-emitter';
+import { NewUserEvent } from '../shared/events/new-user.event';
 
 @Injectable()
 export class TaxpayerService {
@@ -53,5 +55,11 @@ export class TaxpayerService {
   async deleteTaxpayer(id: string) {
     const res = await this.taxpayerRepository.delete(id);
     return res;
+  }
+
+  @OnEvent('user.created')
+  async userCreatedEvent(payload: NewUserEvent) {
+    const taxpayers = await this.getAll();
+    console.log(taxpayers);
   }
 }

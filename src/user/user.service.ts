@@ -1,14 +1,24 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './dto/user.entity';
 import { Between, Repository, ILike } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { NewUserEvent } from '../shared/events/new-user.event';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger('UserService');
+
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async getAllUsers() {
@@ -34,24 +44,12 @@ export class UserService {
       }),
     );
 
-    // const user = await this.userRepository
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(User)
-    //   .values([
-    //     {
-    //       name: 'test',
-    //       isDeleted: false,
-    //       username: 'test',
-    //       createUserId: '1',
-    //       password: 'password',
-    //     },
-    //   ])
-    //   .execute();
-
     if (!user) {
       throw new InternalServerErrorException('User error');
     }
+
+    this.eventEmitter.emit('user.created', new NewUserEvent(body.name));
+    this.cronConsole();
 
     return user;
   }
@@ -87,11 +85,6 @@ export class UserService {
   }
 
   async getUserByName(searchTerm: string) {
-    // const users = await this.userRepository
-    //   .createQueryBuilder('user')
-    //   .where('LOWER(user.name) LIKE LOWER(:name)', { name: `%${searchTerm}%` })
-    //   .getMany();
-
     const users = await this.userRepository.find({
       where: {
         name: ILike(`%${searchTerm}%`),
@@ -99,5 +92,14 @@ export class UserService {
     });
     console.log(users);
     return users;
+  }
+
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  async cronConsole() {
+    const userCount = await this.userRepository
+      .createQueryBuilder('user')
+      .getCount();
+    this.logger.log('crone', userCount);
+    console.log('Crone......');
   }
 }

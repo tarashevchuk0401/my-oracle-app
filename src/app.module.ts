@@ -10,9 +10,13 @@ import { CompanyEntity } from './company/dto/company.dto';
 import { CompanyModule } from './company/company.module';
 import { User } from './user/dto/user.entity';
 import { UserModule } from './user/user.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'oracle',
       host: 'localhost',
@@ -21,7 +25,7 @@ import { UserModule } from './user/user.module';
       password: 'taras',
       autoLoadEntities: true,
       synchronize: true,
-      logging: true,
+      logging: false,
       entities: [TaxpayerEntity, AuditPassportEntity, User, CompanyEntity],
     }),
     TaxpayerModule,
