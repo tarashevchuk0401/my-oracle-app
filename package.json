@@ -1,4 +1,8 @@
 {
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
+  "type": "module",
   "name": "my-oracle-app",
   "version": "0.0.1",
   "description": "",

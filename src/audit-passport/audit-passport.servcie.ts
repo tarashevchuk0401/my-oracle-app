@@ -95,4 +95,9 @@ export class AuditPassportServcie {
 
     return [data, total];
   }
+
+  async deletePassport(id: string) {
+    const result = await this.auditPassportRepository.delete(id);
+    return result;
+  }
 }

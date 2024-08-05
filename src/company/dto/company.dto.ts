@@ -15,15 +15,17 @@ export class CompanyEntity {
   @Column()
   name: string;
 
-  @OneToOne(() => TaxpayerEntity, {
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(
+    () => TaxpayerEntity,
+    (company: TaxpayerEntity) => company.taxpayerId,
+    { onDelete: 'CASCADE' },
+  )
   @JoinColumn({ name: 'taxpayer_id' })
   taxpayer: TaxpayerEntity;
 
-  @Column()
+  @Column({ nullable: true })
   schema: string;
 
-  @Column()
+  @Column({ nullable: true })
   data: string;
 }

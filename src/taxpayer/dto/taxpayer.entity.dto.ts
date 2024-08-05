@@ -1,12 +1,13 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  OneToOne,
   JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CompanyEntity } from '../../company/dto/company.dto';
+import { AuditPassportEntity } from '../../audit-passport/dto/audit-passport.dto';
 
 @Entity()
 export class TaxpayerEntity {
@@ -16,6 +17,14 @@ export class TaxpayerEntity {
   @Column()
   name: string;
 
-  @OneToOne(() => CompanyEntity)
+  @OneToMany(
+    () => AuditPassportEntity,
+    (auditPassport) => auditPassport.responsibleTaxpayer,
+  )
+  audit: AuditPassportEntity;
+
+  @OneToOne(() => CompanyEntity, (company) => company.taxpayer, {
+    onDelete: 'CASCADE',
+  })
   company: CompanyEntity;
 }

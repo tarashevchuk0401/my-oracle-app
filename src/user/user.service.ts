@@ -99,7 +99,5 @@ export class UserService {
     const userCount = await this.userRepository
       .createQueryBuilder('user')
       .getCount();
-    this.logger.log('crone', userCount);
-    console.log('Crone......');
   }
 }

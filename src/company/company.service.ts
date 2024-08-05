@@ -13,27 +13,24 @@ export class CompanyService {
   ) {}
 
   async createCompany(body: { name: string; taxpayerId: string }) {
-    console.log('Sche', JSON.stringify({ name: 'string', code: 'number' }));
-    console.log(
-      'Parse',
-      JSON.parse(JSON.stringify({ name: 'string', code: 'number' })),
-    );
     const taxpayer = await this.taxayerRepository.findOneBy({
       taxpayerId: body.taxpayerId,
     });
-    const company = new CompanyEntity(); // Create a new CompanyEntity instance
-    company.name = body.name;
-    company.taxpayer = taxpayer;
+    console.log(taxpayer);
 
-    company.schema = JSON.stringify({ name: 'string', code: 'string' });
-    company.data = JSON.stringify({ name: body.name, code: body.taxpayerId });
-    const isSaved = await this.companyRepository.save(company);
-    console.log(company);
-    return isSaved;
+    const newCompany = this.companyRepository.create({
+      name: body.name,
+      taxpayer: taxpayer,
+    });
+    await this.companyRepository.save(newCompany);
+    console.log(newCompany);
+    return newCompany;
   }
 
   async getCompanies() {
-    const company = await this.companyRepository.find();
+    const company = await this.companyRepository.find({
+      relations: { taxpayer: true },
+    });
 
     return company;
   }
@@ -61,5 +58,10 @@ export class CompanyService {
       .createQueryBuilder('company')
       .where("json_value(company.data, '$.name') = :name", { name: code })
       .getMany();
+  }
+
+  async deleteCompany(id: string) {
+    const result = await this.companyRepository.delete(id);
+    return result;
   }
 }

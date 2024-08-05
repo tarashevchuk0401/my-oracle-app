@@ -49,4 +49,9 @@ export class AuditPassportController {
   async getTaxpayersByAudit(@Param('id') id: string) {
     return await this.auditPassportService.getTaxpayersByAuditPassportId(id);
   }
+
+  @Delete('passport/:id')
+  async deletePassport(@Param('id') id: string) {
+    return await this.auditPassportService.deletePassport(id);
+  }
 }
