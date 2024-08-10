@@ -12,6 +12,8 @@ import { User } from './user/dto/user.entity';
 import { UserModule } from './user/user.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MinioClientModule } from './minio-client/minio-client.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuditPassportModule,
     CompanyModule,
     UserModule,
+    MinioClientModule,
+    FileUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

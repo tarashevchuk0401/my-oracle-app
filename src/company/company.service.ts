@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyEntity } from './dto/company.dto';
 import { Repository } from 'typeorm';
 import { TaxpayerEntity } from '../taxpayer/dto/taxpayer.entity.dto';
+import { CreateCompanyDto } from './dto/create-company.dto';
 @Injectable()
 export class CompanyService {
   constructor(
@@ -12,7 +13,7 @@ export class CompanyService {
     private readonly taxayerRepository: Repository<TaxpayerEntity>,
   ) {}
 
-  async createCompany(body: { name: string; taxpayerId: string }) {
+  async createCompany(body: CreateCompanyDto) {
     const taxpayer = await this.taxayerRepository.findOneBy({
       taxpayerId: body.taxpayerId,
     });

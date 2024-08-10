@@ -1,12 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CompanyService } from './company.service';
+import { CreateCompanyDto } from './dto/create-company.dto';
 
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  async createCompany(@Body() body: { name: string; taxpayerId: string }) {
+  @UsePipes(new ValidationPipe())
+  async createCompany(@Body() body: CreateCompanyDto) {
     return await this.companyService.createCompany(body);
   }
 
